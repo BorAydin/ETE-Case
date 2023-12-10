@@ -5,12 +5,24 @@ const asyncHandler = require('../middleware/async');
 // desc     Get all companies
 // @route   GET api/v1/companies
 // access   Public
-exports.getCompanies = asyncHandler(async (req, res, next) => {});
+exports.getCompanies = asyncHandler(async (req, res, next) => {
+  const companies = await Company.find();
+
+  res.status(200).json({ succces: true, data: companies });
+});
 
 // desc     Get single company
 // @route   GET api/v1/companies/:id
 // access   Public
-exports.getCompany = asyncHandler(async (req, res, next) => {});
+exports.getCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.findById(req.params.id);
+
+  if (!company) {
+    return res.status(400).json({ succces: false });
+  }
+
+  res.status(200).json({ succces: true, data: company });
+});
 
 // desc     Create new company
 // @route   POST api/v1/companies
