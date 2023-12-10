@@ -18,7 +18,9 @@ exports.getCompany = asyncHandler(async (req, res, next) => {
   const company = await Company.findById(req.params.id);
 
   if (!company) {
-    return res.status(400).json({ succces: false });
+    return next(
+      new ErrorResponse(`${req.params.id}'li şirket bulunamadı.`, 404)
+    );
   }
 
   res.status(200).json({ succces: true, data: company });
@@ -46,7 +48,7 @@ exports.updateCompany = asyncHandler(async (req, res, next) => {
   });
 
   if (!company) {
-    return res.status(400).json({ succces: false });
+    new ErrorResponse(`${req.params.id}'li şirket bulunamadı.`, 404);
   }
 
   res.status(200).json({ succces: true, data: company });
@@ -59,7 +61,7 @@ exports.deleteCompany = asyncHandler(async (req, res, next) => {
   const company = await Company.findByIdAndDelete(req.params.id);
 
   if (!company) {
-    return res.status(400).json({ succces: false });
+    new ErrorResponse(`${req.params.id}'li şirket bulunamadı.`, 404);
   }
 
   res.status(200).json({ succces: true, data: {} });

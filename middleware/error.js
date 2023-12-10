@@ -1,9 +1,35 @@
-const errorHandler = (err, req, res, next) => {
-  // Log to console for dev
-  console.log(err.stack.red);
+const ErrorResponse = require('../utils/errorResponse');
 
-  res.status(500).json({
+const errorHandler = (err, reg, res, next) => {
+  let error = { ...err };
+
+  error.message = err.message;
+
+  // Log to console for dev
+  console.log(err);
+
+  // Mongoose bad ObjectId
+  if (err.name === 'CastError') {
+    const message = `${err.value}'li kaynak bulunamadı.`;
+    error = new ErrorResponse(message, 404);
+  }
+
+  // Mongoose duplicate key
+  if (err.code === 11000) {
+    const message = 'Daha önce girilen bir değeri girdiniz.';
+    error = new ErrorResponse(message, 400);
+  }
+
+  // Mongoose validation error
+  if (err.name === 'ValidationError') {
+    const message = Object.values(err.erros).map((val) => val.message); // err.erros içinde nesneler olan dizi şeklinde geliyor. Bu nesneler içindeki mesajların çıkartımı.
+    error = new ErrorResponse(message, 400);
+  }
+
+  res.status(error.statusCode || 500).json({
     success: false,
-    error: err.message,
+    error: error.message || 'Sunucu Hatası',
   });
 };
+
+module.exports = errorHandler;
