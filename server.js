@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const colors = require('colors');
 
 // Route files
 const auth = require('./routes/auth');
@@ -14,6 +15,9 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 const app = express();
+
+// Body parser
+app.use(express.json());
 
 // Mount routers
 app.use('/api/v1/auth', auth);
