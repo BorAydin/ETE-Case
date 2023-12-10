@@ -24,6 +24,8 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/companies', companies);
 app.use('/api/v1/products', products);
 
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(
