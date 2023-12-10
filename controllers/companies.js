@@ -39,9 +39,28 @@ exports.createCompany = asyncHandler(async (req, res, next) => {
 // desc     Update company
 // @route   PUT api/v1/companies/:id
 // access   Private
-exports.updateCompany = asyncHandler(async (req, res, next) => {});
+exports.updateCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!company) {
+    return res.status(400).json({ succces: false });
+  }
+
+  res.status(200).json({ succces: true, data: company });
+});
 
 // desc     Delete company
 // @route   DELETE api/v1/companies/:id
 // access   Private
-exports.deleteCompany = asyncHandler(async (req, res, next) => {});
+exports.deleteCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.findByIdAndDelete(req.params.id);
+
+  if (!company) {
+    return res.status(400).json({ succces: false });
+  }
+
+  res.status(200).json({ succces: true, data: {} });
+});
