@@ -1,5 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
+const {
+  getProducts,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  getProduct,
+} = require('../controllers/products');
 
 router.route('/').get(getProducts).post(addProduct);
 
