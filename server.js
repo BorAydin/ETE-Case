@@ -30,5 +30,6 @@ app.listen(
   PORT,
   console.log(
     `Sunucu ${process.env.NODE_ENV} ortamında ${PORT} portunda çalışıyor.`
+      .yellow.bold
   )
 );

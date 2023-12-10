@@ -15,7 +15,14 @@ exports.getCompany = asyncHandler(async (req, res, next) => {});
 // desc     Create new company
 // @route   POST api/v1/companies
 // access   Private
-exports.createCompany = asyncHandler(async (req, res, next) => {});
+exports.createCompany = asyncHandler(async (req, res, next) => {
+  const company = await Company.create(req.body);
+
+  res.status(201).json({
+    succces: true,
+    data: company,
+  });
+});
 
 // desc     Update company
 // @route   PUT api/v1/companies/:id
