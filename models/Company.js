@@ -36,12 +36,6 @@ const CompanySchema = new mongoose.Schema(
   }
 );
 
-// Cascade delete courses when a bootcamp is deleted
-CompanySchema.pre('remove', async function (next) {
-  await this.model('Product').deleteMany({ company: this._id });
-  next();
-});
-
 // Reverse populate with virtuals
 CompanySchema.virtual('products', {
   ref: 'Product',

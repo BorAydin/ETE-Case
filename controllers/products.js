@@ -8,24 +8,17 @@ const Company = require('../models/Company');
 // @route   GET /api/v1/companies/:companyId/products
 // @access  Public
 exports.getProducts = asyncHandler(async (req, res, next) => {
-  let query;
-
   if (req.params.companyId) {
-    query = Product.find({ company: req.params.companyId });
-  } else {
-    query = Product.find().populate({
-      path: 'company',
-      select: 'name, legalNumber',
+    const products = Product.find({ company: req.params.companyId });
+
+    return res.status(200).json({
+      succces: true,
+      count: products.length,
+      data: products,
     });
+  } else {
+    res.status(200).json(res.advancedResults);
   }
-
-  const products = await query;
-
-  res.status(200).json({
-    success: true,
-    count: products.length,
-    data: products,
-  });
 });
 
 // @desc    Get single product
@@ -71,11 +64,35 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Update product
-// @route   PUT /api/v1/product/:id
+// @route   PUT /api/v1/products/:id
 // @access  Private
-exports.updateProduct = asyncHandler(async (req, res, next) => {});
+exports.updateProduct = asyncHandler(async (req, res, next) => {
+  let product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorResponse(`Bu ${req.params.id}'li ürün yok.`), 404);
+  }
+
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: product,
+  });
+});
 
 // desc     Delete product
-// @route   DELETE api/v1/product/:id
+// @route   DELETE api/v1/products/:id
 // access   Private
-exports.deleteProduct = asyncHandler(async (req, res, next) => {});
+exports.deleteProduct = asyncHandler(async (req, res, next) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
+
+  if (!product) {
+    return next(new ErrorResponse(`${req.params.id}'li ürün bulunamadı.`, 404));
+  }
+
+  res.status(200).json({ succces: true, data: {} });
+});
