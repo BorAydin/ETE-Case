@@ -27,7 +27,7 @@ exports.getCompanies = asyncHandler(async (req, res, next) => {
   );
 
   // Finding resource
-  query = Company.find(JSON.parse(queryStr));
+  query = Company.find(JSON.parse(queryStr)).populate('products');
 
   // Select Fields
   if (req.query.select) {
@@ -127,11 +127,13 @@ exports.updateCompany = asyncHandler(async (req, res, next) => {
 // @route   DELETE api/v1/companies/:id
 // access   Private
 exports.deleteCompany = asyncHandler(async (req, res, next) => {
-  const company = await Company.findByIdAndDelete(req.params.id);
+  const company = await Company.findById(req.params.id);
 
   if (!company) {
     new ErrorResponse(`${req.params.id}'li şirket bulunamadı.`, 404);
   }
+
+  company.remove();
 
   res.status(200).json({ succces: true, data: {} });
 });

@@ -22,7 +22,7 @@ const errorHandler = (err, reg, res, next) => {
 
   // Mongoose validation error
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.erros).map((val) => val.message); // err.erros içinde nesneler olan dizi şeklinde geliyor. Bu nesneler içindeki mesajların çıkartımı.
+    const message = Object.values(err.erros).map((val) => val.message);
     error = new ErrorResponse(message, 400);
   }
 

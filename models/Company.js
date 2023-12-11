@@ -43,11 +43,11 @@ CompanySchema.pre('remove', async function (next) {
 });
 
 // Reverse populate with virtuals
-CompanySchema.virtual('courses', {
+CompanySchema.virtual('products', {
   ref: 'Product',
   localField: '_id',
   foreignField: 'company',
   justOne: false,
 });
 
-module.exports = mongoose.model('company', CompanySchema);
+module.exports = mongoose.model('Company', CompanySchema);
