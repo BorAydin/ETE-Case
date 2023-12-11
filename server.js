@@ -20,6 +20,28 @@ const app = express();
 // Body parser
 app.use(express.json());
 
+// Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent XSS (Cross Site Scripting) attacks
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 100, // max requests
+});
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Enable CORS
+app.use(cors());
+
 // Mount routers
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/companies', companies);
