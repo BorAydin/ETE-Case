@@ -1,6 +1,6 @@
 config/config.env dizininde 
-MONGO_URI=
 
+MONGO_URI=
 JWT_SECRET=
 JWT_EXPIRE=
 JWT_COOKIE_EXPIRE=
