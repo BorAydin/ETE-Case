@@ -55,4 +55,9 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @desc      Log user out / clear cookie
 // @route     GET /api/v1/auth/logout
 // @access    Private
-exports.logout = asyncHandler(async (req, res, next) => {});
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
