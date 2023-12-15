@@ -13,3 +13,14 @@
 .ant-menu {
   padding-top: 20px;
 }
+
+.ant-layout-header {
+  color: #fff;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.ant-layout-header div > span,
+.ant-layout-header p {
+  margin-right: 10px;
+}
