@@ -1,0 +1,15 @@
+.panel-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.panel-name img {
+  height: 150px;
+  width: 100%;
+}
+
+.ant-menu {
+  padding-top: 20px;
+}

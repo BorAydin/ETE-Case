@@ -1,0 +1,19 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.login-container .login-form,
+.login-container .login-banner {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container .login-banner img {
+  width: 100%;
+  height: 100vh;
+}
