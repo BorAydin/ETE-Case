@@ -44,17 +44,6 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/companies/:companyId/products
 // @access  Private
 exports.addProduct = asyncHandler(async (req, res, next) => {
-  req.body.company = req.params.companyId;
-
-  const company = await Company.findById(req.body.company);
-
-  if (!company) {
-    return next(
-      new ErrorResponse(`Bu ${req.body.company}'li şirket yok.`),
-      404
-    );
-  }
-
   const product = await Product.create(req.body);
 
   res.status(200).json({
