@@ -1,7 +1,24 @@
-import { Space, Table, Tag } from 'antd';
+import { Modal, Space, Table, Tag, message } from 'antd';
 import React from 'react';
+import { deleteCompany } from '../../context/companies/CompaniesActions';
+import EditCompanyModal from './editCompanyModal ';
 
-const CompanyTable = ({ data, loading }) => {
+const CompanyTable = ({ data, loading, refreshTable }) => {
+  const handleDeleteCompany = async (id) => {
+    try {
+      Modal.confirm({
+        title: 'Confirm',
+        content: 'Are sure delete this company',
+        onOk: async () => {
+          await deleteCompany(id);
+          message.info('Company Deleted');
+          refreshTable();
+        },
+      });
+    } catch (error) {
+      message.error(error.response.data.error.toString());
+    }
+  };
   const columns = [
     {
       title: 'Name',
@@ -40,14 +57,12 @@ const CompanyTable = ({ data, loading }) => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
+          <EditCompanyModal company={record} refreshTable={refreshTable} />
+          <a onClick={() => handleDeleteCompany(record.id)}>Delete</a>
         </Space>
       ),
     },
   ];
-
-  console.log(data);
 
   return (
     <Table

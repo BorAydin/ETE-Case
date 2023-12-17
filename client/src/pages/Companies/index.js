@@ -39,7 +39,11 @@ const Compaines = () => {
           />
         </Col>
         <Col sm={24} style={{ height: '70vh' }}>
-          <CompanyTable data={state.compaines} loading={state.loading} />
+          <CompanyTable
+            data={state.compaines}
+            loading={state.loading}
+            refreshTable={getCompanies}
+          />
         </Col>
       </Row>
     </Card>

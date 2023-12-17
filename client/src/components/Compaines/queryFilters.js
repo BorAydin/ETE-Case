@@ -1,5 +1,6 @@
 import { Button, Col, Form, Input, InputNumber, Row } from 'antd';
 import React from 'react';
+import AddCompanyModal from './addCompanyModal';
 
 const QueryFilters = ({ onSearch, loading }) => {
   const handleSubmit = (values) => {
@@ -12,22 +13,22 @@ const QueryFilters = ({ onSearch, loading }) => {
   return (
     <Form layout="vertical" onFinish={handleSubmit}>
       <Row gutter={10}>
-        <Col sm={6}>
+        <Col sm={4}>
           <Form.Item label="Name" name="name[in]">
             <Input />
           </Form.Item>
         </Col>
-        <Col sm={6}>
+        <Col sm={4}>
           <Form.Item label="Country" name="country[in]">
             <Input />
           </Form.Item>
         </Col>
-        <Col sm={6}>
+        <Col sm={4}>
           <Form.Item label="Legal Number" name="legalNumber[in]">
             <InputNumber style={{ width: '100%' }} min={1} />
           </Form.Item>
         </Col>
-        <Col sm={6}>
+        <Col sm={3}>
           <Form.Item>
             <Button
               style={{ marginTop: '30px' }}
@@ -39,6 +40,9 @@ const QueryFilters = ({ onSearch, loading }) => {
               Search Company
             </Button>
           </Form.Item>
+        </Col>
+        <Col sm={4}>
+          <AddCompanyModal refreshTable={onSearch} />
         </Col>
       </Row>
     </Form>
