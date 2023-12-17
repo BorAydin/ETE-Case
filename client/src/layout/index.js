@@ -8,6 +8,9 @@ const { Content, Header } = Layout;
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const user = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null;
 
   return (
     <Layout
@@ -20,7 +23,7 @@ const AppLayout = ({ children }) => {
         <Header>
           <p>Admin Panel</p>
           <div>
-            <span>Bora Aydın Hoşgeldiniz.</span>
+            <span>{user?.name} Hoşgeldiniz.</span>
             <Avatar
               style={{ backgroundColor: '#87d068' }}
               icon={<UserOutlined />}

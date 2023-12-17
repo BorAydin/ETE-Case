@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import React from 'react';
 import LoginForm from '../../components/Login/loginForm';
 import './style.css';
@@ -12,8 +13,12 @@ const Login = () => {
         />
       </div>
       <div className="login-form">
-        <h2>Login ETE PANEL</h2>
+        <Typography.Title>Login ETE PANEL</Typography.Title>
         <LoginForm />
+        <Typography.Text>
+          If you do not have an account,
+          <a href="/register"> click to create an account.</a>
+        </Typography.Text>
       </div>
     </div>
   );

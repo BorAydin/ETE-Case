@@ -14,7 +14,13 @@ const App = () => {
           <Route
             exact
             path={route.path}
-            element={<AppLayout>{route.element}</AppLayout>}
+            element={
+              route.path === '/login' || route.path === '/register' ? (
+                route.element
+              ) : (
+                <AppLayout>{route.element}</AppLayout>
+              )
+            }
           />
         ))}
       </Routes>
