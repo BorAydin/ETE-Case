@@ -1,44 +1,30 @@
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Button, Col, Form, Input, InputNumber, Row } from 'antd';
 import React from 'react';
-import { validateEmail } from '../../utils/form-validations/email';
 
-const QueryFilters = () => {
+const QueryFilters = ({ onSearch, loading }) => {
   const handleSubmit = (values) => {
-    console.log(values);
+    if (!values['name[in]']) delete values['name[in]'];
+    if (!values['country[in]']) delete values['country[in]'];
+    if (!values['legalNumber[in]']) delete values['legalNumber[in]'];
+    onSearch?.(values);
   };
 
   return (
     <Form layout="vertical" onFinish={handleSubmit}>
       <Row gutter={10}>
         <Col sm={6}>
-          <Form.Item
-            label="E-mail"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your email!',
-              },
-              {
-                validator: validateEmail,
-              },
-            ]}
-          >
+          <Form.Item label="Name" name="name[in]">
             <Input />
           </Form.Item>
         </Col>
         <Col sm={6}>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-            ]}
-          >
-            <Input.Password />
+          <Form.Item label="Country" name="country[in]">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col sm={6}>
+          <Form.Item label="Legal Number" name="legalNumber[in]">
+            <InputNumber style={{ width: '100%' }} min={1} />
           </Form.Item>
         </Col>
         <Col sm={6}>
@@ -48,6 +34,7 @@ const QueryFilters = () => {
               danger
               type="primary"
               htmlType="submit"
+              loading={loading}
             >
               Search Company
             </Button>
