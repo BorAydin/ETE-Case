@@ -2,7 +2,7 @@ import React from 'react';
 import RegisterForm from '../../components/Register/registerForm';
 import './style.css';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="login-container">
       <div className="login-banner">
@@ -19,4 +19,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
