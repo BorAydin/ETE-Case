@@ -1,4 +1,5 @@
 import { Modal, Space, Table, Tag, message } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { deleteCompany } from '../../context/companies/CompaniesActions';
 import EditCompanyModal from './editCompanyModal ';
@@ -51,6 +52,12 @@ const CompanyTable = ({ data, loading, refreshTable }) => {
           })}
         </>
       ),
+    },
+    {
+      title: 'Create Date',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (text) => moment(text).format('DD/MM/YYYY'),
     },
     {
       title: 'Action',

@@ -1,4 +1,5 @@
 import { Modal, Space, Table, message } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { deleteProduct } from '../../context/products/ProductsActions';
 import EditProductModal from './editProductModal ';
@@ -41,7 +42,12 @@ const ProductTable = ({ data, loading, refreshTable }) => {
       dataIndex: 'amountUnit',
       key: 'amountUnit',
     },
-
+    {
+      title: 'Create Date',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (text) => moment(text).format('DD/MM/YYYY'),
+    },
     {
       title: 'Action',
       key: 'action',

@@ -23,6 +23,7 @@ const LoginForm = () => {
       navigate('/dashboard');
     } catch (error) {
       message.error(error.toString());
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
