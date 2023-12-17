@@ -9,7 +9,6 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const { loading, dispatch } = useContext(AuthContext);
 
-  console.log(useContext(AuthContext));
   const handleSubmit = async (values) => {
     dispatch({ type: 'SET_LOADING' });
 

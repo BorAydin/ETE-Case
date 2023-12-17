@@ -1,12 +1,26 @@
-// import Navbar from './components/layout/Navbar';
-// import Landing from './components/layout/Landing';
-import React from 'react';
+import { message } from 'antd';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import AppLayout from './layout';
 import { routes } from './routes';
+import { getLocalStorageValue } from './utils/localStorage';
 
+const EXCLUDED_PATHS = ['/login', '/register'];
 const App = () => {
+  useEffect(() => {
+    const user = getLocalStorageValue('user');
+    if (user && user?.token) {
+      axios.defaults.headers['Authorization'] = `Bearer ${user?.token}`;
+    } else {
+      if (!EXCLUDED_PATHS.includes(window.location.pathname)) {
+        message.error('User not authorized!');
+        window.location.assign('/login');
+      }
+    }
+  }, []);
+
   return (
     <Router>
       <Routes>

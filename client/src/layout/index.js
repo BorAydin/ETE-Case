@@ -1,17 +1,35 @@
-import { Avatar, Layout } from 'antd';
-import React, { useState } from 'react';
+import { Avatar, Button, Layout, message } from 'antd';
+import React, { useContext, useState } from 'react';
 import Sidebar from './sidebar';
 
 import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router';
+import { logout } from '../context/auth/AuthActions';
+import AuthContext from '../context/auth/AuthContext';
+import { getLocalStorageValue } from '../utils/localStorage';
 import './style.css';
 const { Content, Header } = Layout;
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const user = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
-    : null;
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
+  const user = getLocalStorageValue('user');
+
+  const handleLogut = async () => {
+    try {
+      await logout();
+
+      dispatch({
+        type: 'REMOVE_USER',
+      });
+
+      navigate('/login');
+    } catch (error) {
+      message.error(error.toString());
+    }
+  };
   return (
     <Layout
       style={{
@@ -21,13 +39,15 @@ const AppLayout = ({ children }) => {
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
         <Header>
-          <p>Admin Panel</p>
           <div>
             <span>{user?.name} Hoşgeldiniz.</span>
             <Avatar
               style={{ backgroundColor: '#87d068' }}
               icon={<UserOutlined />}
             />
+            <Button onClick={handleLogut} ghost danger>
+              Logout
+            </Button>
           </div>
         </Header>
         <Content
